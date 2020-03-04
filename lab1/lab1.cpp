@@ -9,7 +9,7 @@ void* echo_1(void *args)
 	int &flag_adr = *(int*)args;
 	while (flag_adr != 1)
 		{
-			cout << "1 ";
+			cout << "1" << flush;
 			usleep(10000);
 		}
 }
@@ -19,9 +19,10 @@ void* echo_2(void *args)
 	int &flag_adr = *(int*)args;
 	while (flag_adr != 1)
 		{
-			cout << "2 ";
+			cout << "2" << flush;
 			usleep(10000);
 		}
+// Добавить код возврата
 }
 
 int main()
