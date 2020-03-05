@@ -6,7 +6,7 @@ using namespace std;
 
 void* echo_1(void *args)
 {
-	cout << "first thread started.\n" << flush;
+	cout << "first thread started \n" << flush;
 
 	int &flag_adr = *(int*)args;
 	while (flag_adr != 1)
@@ -15,13 +15,14 @@ void* echo_1(void *args)
 			usleep(10000);
 		}
 
-	cout << "first thread ended: " << flush;
-	pthread_exit(0);
+	string *retcode = new string("ok");
+	cout << "first thread ended with code : " << *retcode << "\n" << flush;
+	pthread_exit(retcode);
 }
 
 void* echo_2(void *args)
 {
-	cout << "second thread started.\n" << flush;
+	cout << "second thread started \n" << flush;
 
 	int &flag_adr = *(int*)args;
 	while (flag_adr != 1)
@@ -30,7 +31,10 @@ void* echo_2(void *args)
 			usleep(10000);
 		}
 
-	cout << "second thread ended with code: " << flush;
+
+	string *retcode = new string("ok");
+	cout << "second thread ended with code : " << *retcode << "\n" << flush;
+	pthread_exit(retcode);
 }
 
 int main()
@@ -49,13 +53,25 @@ int main()
 	int a;
 	cin >> a;
 
-	cout << a * a;
-
 	first_flag = 1;
 	second_flag = 1;
 
 	status_1 = pthread_join(thread_1, (void**)&status_adr);
 	status_2 = pthread_join(thread_2, (void**)&status_adr);
 
+	cout << "Main ended \n" << flush;
+
 	return 0;
 }
+
+/*
+
+ilya@ilya-VirtualBox:~/Документы/pr/pr_labs/labs/lab1$ ./q
+first thread started 
+1second thread started 
+212122121212121212121122112211221122112213122112122112
+first thread ended with code : ok
+second thread ended with code : ok
+Main ended 
+
+*/

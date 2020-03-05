@@ -8,28 +8,48 @@ pthread_mutex_t mutex;
 
 void* echo_1(void *args)
 {
-    if (pthread_mutex_trylock(&mutex))
-	for(int i = 0; i < 10; i++)
+	cout << "first thread started \n" << flush;
+    if (pthread_mutex_trylock(&mutex) == 0)
+	{
+		for(int i = 0; i < 10; i++)
 		{
-			cout << "1" << flush;
+			cout << "1";
 			usleep(100);
 		}
+    }
+    else
+    	cout << "first thread is blocked\n";
+    cout << endl;
+    
     pthread_mutex_unlock(&mutex);
     sleep(1);
+
+    string *retcode = new string("ok");
+	cout << "first thread ended with code : " << *retcode << "\n" << flush;
+	pthread_exit(retcode);
 }
 
 void* echo_2(void *args)
 {
-
-    if (pthread_mutex_trylock(&mutex))
-	for(int i = 0; i < 10; i++)
+	cout << "second thread started \n" << flush;
+    if (pthread_mutex_trylock(&mutex) == 0)
+	{
+		for(int i = 0; i < 10; i++)
 		{
-			cout << "2" << flush;
+			cout << "2";
 			usleep(100);
 		}
-
+	}
+	else
+    	cout << "second thread is blocked\n";
+	cout << endl;
+    
     pthread_mutex_unlock(&mutex);
     sleep(1);
+
+	string *retcode = new string("ok");
+	cout << "second thread ended with code : " << *retcode << "\n" << flush;
+	pthread_exit(retcode);
 }
 
 int main()
@@ -50,12 +70,25 @@ int main()
 	int a;
 	cin >> a;
 
-	cout << a * a;
-
 	status_1 = pthread_join(thread_1, (void**)&status_adr);
 	status_2 = pthread_join(thread_2, (void**)&status_adr);
 
     pthread_mutex_destroy(&mutex);
 
+    cout << "Main ended \n" << flush;
+
 	return 0;
 }
+
+/*
+ilya@ilya-VirtualBox:~/Документы/pr/pr_labs/labs/lab2$ ./l2
+first thread started 
+1second thread started 
+second thread is blocked
+
+111111111
+second thread ended with code : ok
+first thread ended with code : ok
+0
+Main ended 
+*/

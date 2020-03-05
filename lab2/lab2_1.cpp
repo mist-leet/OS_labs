@@ -8,6 +8,8 @@ pthread_mutex_t mutex;
 
 void* echo_1(void *args)
 {
+    cout << "first thread started \n" << flush;
+
     pthread_mutex_lock(&mutex);
 
 	for(int i = 0; i < 10; i++)
@@ -17,10 +19,16 @@ void* echo_1(void *args)
 		}
     pthread_mutex_unlock(&mutex);
     sleep(1);
+
+    string *retcode = new string("ok");
+	cout << "\nfirst thread ended with code : " << *retcode << "\n" << flush;
+	pthread_exit(retcode);
 }
 
 void* echo_2(void *args)
 {
+    cout << "first thread started \n" << flush;
+    
     pthread_mutex_lock(&mutex);
 
 	for(int i = 0; i < 10; i++)
@@ -31,6 +39,10 @@ void* echo_2(void *args)
 
     pthread_mutex_unlock(&mutex);
     sleep(1);
+
+    string *retcode = new string("ok");
+	cout << "second thread ended with code : " << *retcode << "\n" << flush;
+	pthread_exit(retcode);
 }
 
 int main()
@@ -51,12 +63,25 @@ int main()
 	int a;
 	cin >> a;
 
-	cout << a * a;
-
 	status_1 = pthread_join(thread_1, (void**)&status_adr);
 	status_2 = pthread_join(thread_2, (void**)&status_adr);
 
     pthread_mutex_destroy(&mutex);
 
+	cout << "Main ended \n" << flush;
+
 	return 0;
 }
+
+/*
+ilya@ilya-VirtualBox:~/Документы/pr/pr_labs/labs/lab2$ ./l1
+first thread started 
+1first thread started 
+1111111112222222222
+first thread ended with code : ok
+second thread ended with code : ok
+
+1
+Main ended 
+
+*/
