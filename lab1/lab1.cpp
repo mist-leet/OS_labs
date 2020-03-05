@@ -6,23 +6,31 @@ using namespace std;
 
 void* echo_1(void *args)
 {
+	cout << "first thread started.\n" << flush;
+
 	int &flag_adr = *(int*)args;
 	while (flag_adr != 1)
 		{
 			cout << "1" << flush;
 			usleep(10000);
 		}
+
+	cout << "first thread ended: " << flush;
+	pthread_exit(0);
 }
 
 void* echo_2(void *args)
 {
+	cout << "second thread started.\n" << flush;
+
 	int &flag_adr = *(int*)args;
 	while (flag_adr != 1)
 		{
 			cout << "2" << flush;
 			usleep(10000);
 		}
-// Добавить код возврата
+
+	cout << "second thread ended with code: " << flush;
 }
 
 int main()
