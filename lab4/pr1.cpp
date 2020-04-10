@@ -6,7 +6,6 @@
 
 int main(int args, char **argv)
 {
-	usleep(1000000);
 	std::cout << "===program 1 started===" << std::endl;
 	
 	for(int i = 0; i < args; i++)
@@ -14,12 +13,12 @@ int main(int args, char **argv)
 		for(int j = 0; argv[i][j] != NULL; j++)
 			{
 				std::cout << argv[i][j] << std::flush;
-				usleep(10000);
 			}
+			usleep(100000);
 		std::cout << std::endl;
 	}
 
  	std::cout << "===program 1 ended===" << std::endl;
 
-	return 0;
+	exit(25);
 }
