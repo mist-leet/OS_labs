@@ -6,7 +6,8 @@
 
 int main(int args, char **argv)
 {
-	std::cout << "\n===program 1 started===" << std::endl;
+	usleep(1000000);
+	std::cout << "===program 1 started===" << std::endl;
 	
 	for(int i = 0; i < args; i++)
 	{
@@ -20,6 +21,5 @@ int main(int args, char **argv)
 
  	std::cout << "===program 1 ended===" << std::endl;
 
-	exit(EXIT_SUCCESS);
 	return 0;
 }
