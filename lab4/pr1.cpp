@@ -22,3 +22,16 @@ int main(int args, char **argv)
 
 	exit(25);
 }
+
+
+// output:
+/*
+ilya@ilya-VirtualBox:~/Документы/pr/pr_labs/labs/lab4$ ./q1 qwe qwe qwe 
+===program 1 started===
+./q1
+qwe
+qwe
+qwe
+===program 1 ended===
+
+*/

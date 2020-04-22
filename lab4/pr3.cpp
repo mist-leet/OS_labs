@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#define STACK_SIZE 1024 * 1024
+
 int run()
 {
 	const char *p1 = "hello";
@@ -13,12 +15,21 @@ int run()
 	return  execl("./q1", "./q1",p1, p2,p3, NULL);
 }
 
+static int runner(void *args)
+{
+	return run();
+}
+
 int main(int args, char **argv)
 {
 	std::cout << "===program 2 started===" << std::endl;
 	
-	pid_t pid = fork();
 	int status = -2;
+
+	char *stack = new char[STACK_SIZE];
+	char *stackTop;
+
+	pid_t pid = clone(runner, stackTop, SIGCHLD, NULL);
 
 	std::cout << "process id : " << pid << std::endl;
 
@@ -53,19 +64,25 @@ int main(int args, char **argv)
 	return 0;
 }
 
+// output
+
 /*
-
-
-		
-
-std:: cout << "status of pr1 : " << status << std::endl;
-		while (status != 1)
-		{
-			std:: cout << "status of pr1 : " << status << std::endl;
-			waitpid(pid, &status,0);
-			usleep(100000);
-			
-		} 
-		std::cout << "program 1 ended with status : " << status << std::endl;
-
+ilya@ilya-VirtualBox:~/Документы/pr/pr_labs/labs/lab4$ ./q3
+===program 2 started===
+process id : 4863
+==parent process started==
+checking for pr1... status : -2
+process id : 0
+==child process started==
+Hello from child process!!!
+===program 1 started===
+./q1
+hello
+from
+pr1
+===program 1 ended===
+ pr1 ended with status : 25
+==parent process ended==
+===program 2 ended===
+ilya@ilya-VirtualBox:~/Д
 */

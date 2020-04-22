@@ -53,19 +53,25 @@ int main(int args, char **argv)
 	return 0;
 }
 
+// output
+
 /*
-
-
-		
-
-std:: cout << "status of pr1 : " << status << std::endl;
-		while (status != 1)
-		{
-			std:: cout << "status of pr1 : " << status << std::endl;
-			waitpid(pid, &status,0);
-			usleep(100000);
-			
-		} 
-		std::cout << "program 1 ended with status : " << status << std::endl;
+ilya@ilya-VirtualBox:~/Документы/pr/pr_labs/labs/lab4$ ./q2
+===program 2 started===
+process id : 4866
+==parent process started==
+checking for pr1... status : -2
+process id : 0
+==child process started==
+Hello from child process!!!
+===program 1 started===
+./q1
+hello
+from
+pr1
+===program 1 ended===
+ pr1 ended with status : 25
+==parent process ended==
+===program 2 ended===
 
 */
